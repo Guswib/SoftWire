@@ -1,6 +1,6 @@
 {
     "name": "Softwire",
-    "version": "2.0.9",
+    "version": "2.0.10",
     "description": "SoftWire is a software I2C implementation for Arduino and other Wiring-type environments.",
     "keywords": "I2C",
     "repository": {
