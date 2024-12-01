@@ -1,13 +1,13 @@
 #ifndef SOFTWIRE_H
 #define SOFTWIRE_H
 
-#define SOFTWIRE_VERSION "2.0.10"
+#define SOFTWIRE_VERSION "2.0.11"
 
 #include <Arduino.h>
 #include <stdint.h>
 #include <AsyncDelay.h>
 
-class SoftWire : public Stream {
+class SoftWire : public HardwareI2C {
   public:
     enum result_t {
       ack = 0,
@@ -38,6 +38,7 @@ class SoftWire : public Stream {
     inline uint8_t getScl(void) const;
     inline uint8_t getDelay_us(void) const;
     inline uint16_t getTimeout_ms(void) const;
+    
     inline uint8_t getInputMode(void) const;
 
     // begin() must be called after any changes are made to SDA and/or
@@ -48,6 +49,7 @@ class SoftWire : public Stream {
 
     inline void setDelay_us(uint8_t delay_us);
     inline void setTimeout_ms(uint16_t timeout_ms);
+    inline void setTimeout(uint16_t timeout_ms); //Steam-class.
 
     // begin() must be called before use, and after any changes are made
     // to the SDA and/or SCL pins.
@@ -128,7 +130,6 @@ class SoftWire : public Stream {
       return endTransmission(true);
     }
 
-
     uint8_t requestFrom(uint8_t address, uint8_t quantity, uint8_t sendStop = true);
     // inline uint8_t requestFrom(int address, int quantity) {
     //     return requestFrom((uint8_t)address, (uint8_t)quantity, (uint8_t)true);
@@ -142,6 +143,8 @@ class SoftWire : public Stream {
       _rxBufferIndex = 0;
       _rxBufferBytesRead = 0;
     }
+ 
+
 
     inline void setTxBuffer(void *txBuffer, uint8_t txBufferSize) {
       _txBuffer = (uint8_t*)txBuffer;
